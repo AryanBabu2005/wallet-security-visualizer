@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wallet Security Visualizer</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { padding: 5px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h2> Wallet Security Visualizer</h2>
+    <form method="POST">
+        <label>Secret (e.g., private key as number):</label><br>
+        <input type="number" name="secret" required><br>
+        <label>Total Shares:</label><br>
+        <input type="number" name="total" required><br>
+        <label>Threshold to Reconstruct:</label><br>
+        <input type="number" name="threshold" required><br>
+        <button type="submit">Split & Visualize</button>
+    </form>
+
+    {% if shares %}
+        <h3> Generated Shares</h3>
+        <ul>
+            {% for s in shares %}
+                <li>Share {{ s[0] }}: {{ s[1] }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3> Reconstructed Secret</h3>
+        <p>Original: {{ secret }} | Reconstructed: {{ reconstructed }}</p>
+
+        <h3> Visualization</h3>
+        <img src="{{ url_for('static', filename='chart.png') }}" width="600">
+    {% endif %}
+</body>
+</html>
